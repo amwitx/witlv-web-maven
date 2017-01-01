@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Reg
+ * Servlet implementation class RegServlet
  */
 public class RegServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +25,7 @@ public class RegServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("Served at: reg").append(request.getContextPath());
 	}
 
 	/**
