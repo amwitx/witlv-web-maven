@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet
 		try
 		{
 			Properties props = new Properties();
-			InputStream stream = context.getResourceAsStream("/WEB-INF/classes/v1/db.properties");
+			InputStream stream = context.getResourceAsStream("/WEB-INF/classes/v1/db/config/db.properties");
 			props.load(stream);
 			// String proPath =
 			// context.getRealPath("WEB-INF/config//db.properties");
