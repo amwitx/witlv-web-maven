@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -33,20 +34,29 @@ public class LoginServlet extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: login").append(request.getContextPath());
-
 		response.setHeader("content-type", "text/html;charset=utf-8");
-		ServletContext context = this.getServletContext();
 
+		String data = "你好，LoginServlet";
+		response.setHeader("content-type", "text/html;charset=utf-8");
+		String id = request.getParameter("id");
+		response.getWriter().append(data + ",id=" + id);
+		response.getWriter().append("<hr/>");
+		ServletContext context = this.getServletContext();
+		Properties props = new Properties();
 		try
 		{
-			Properties props = new Properties();
+			// 读取配置文件
+			ResourceBundle resource = ResourceBundle.getBundle("v1/db/config/db");
+			response.getWriter().append(resource.getString("jdbc.driver"));
+			response.getWriter().append(resource.getString("jdbc.url"));
+			response.getWriter().append(resource.getString("jdbc.username"));
+			response.getWriter().append(resource.getString("jdbc.password"));
+			response.getWriter().append("<hr/>");
+
 			InputStream stream = context.getResourceAsStream("/WEB-INF/classes/v1/db/config/db.properties");
 			props.load(stream);
-			// String proPath =
-			// context.getRealPath("WEB-INF/config//db.properties");
-			// props.load(new FileInputStream(proPath));
 			String driver = props.getProperty("jdbc.driver");
 			String url = props.getProperty("jdbc.url");
 			String username = props.getProperty("jdbc.username");
@@ -54,6 +64,8 @@ public class LoginServlet extends HttpServlet
 
 			response.getWriter().append(MessageFormat.format("driver={0},url={1},username={2},password{3}", driver, url,
 					username, password));
+			response.getWriter().append("<hr/>");
+			response.getWriter().append("中国");
 		} catch (Exception e)
 		{
 			// TODO: handle exception
