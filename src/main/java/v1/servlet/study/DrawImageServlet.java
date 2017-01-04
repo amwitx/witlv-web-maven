@@ -1,4 +1,4 @@
-package v1.servlet.user;
+package v1.servlet.study;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,18 +14,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
- * Servlet implementation class ValicodeServlet
+ * Servlet implementation class DrawImageServlet
  */
-public class ValicodeServlet extends HttpServlet
+public class DrawImageServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ValicodeServlet()
+	public DrawImageServlet()
 	{
 		super();
 		// TODO Auto-generated constructor stub
@@ -53,6 +52,7 @@ public class ValicodeServlet extends HttpServlet
 		gra.fillRect(0, 0, width, height);
 		// 设置颜色
 		gra.setColor(Color.red);
+		// ---------------------------------------------------个性化
 		// 绘制边框
 		gra.drawRect(1, 1, width - 2, height - 2);
 		// 绘制干扰线
@@ -61,8 +61,10 @@ public class ValicodeServlet extends HttpServlet
 		gra.setColor(Color.blue);
 		// 设置字体
 		gra.setFont(new Font(null, Font.PLAIN, 20));
-		// 绘制字符
 		getRandomChinese((Graphics2D) gra, 4, "cm");
+		// ---------------------------------------------------个性化
+		// 绘制字符
+		// gra.drawString(makeNum(), 2, 18);
 		// 设置响应头控制浏览器浏览器以图片的方式打开，等同于response.setHeader("Content-Type",
 		// "image/jpeg");
 		response.setContentType("image/jpeg");
@@ -72,7 +74,6 @@ public class ValicodeServlet extends HttpServlet
 		response.setHeader("Prama", "no-cache");
 		// 输出图片
 		ImageIO.write(image, "jpg", response.getOutputStream());
-
 	}
 
 	private String getRandomChinese(Graphics2D gra, int count, String type)
@@ -89,14 +90,14 @@ public class ValicodeServlet extends HttpServlet
 		switch (type)
 		{
 		case "ch":
-			return createRandomString(gra, 4, chineseCode);
+			return createRandomString(gra, count, chineseCode);
 		case "en":
-			return createRandomString(gra, 6, englishCode);
+			return createRandomString(gra, count, englishCode);
 		case "nu":
-			return createRandomString(gra, 6, numberCode);
+			return createRandomString(gra, count, numberCode);
 		case "cm":
 		default:
-			return createRandomString(gra, 6, valiCode);
+			return createRandomString(gra, count, valiCode);
 		}
 	}
 
@@ -132,6 +133,21 @@ public class ValicodeServlet extends HttpServlet
 			gra.drawLine(x1, y1, x2, y2);
 		}
 	}
+
+	// 生成随机数
+//	private String makeNum()
+//	{
+//		// TODO 自动生成的方法存根
+//		Random random = new Random();
+//		String num = random.nextInt(999999) + "";
+//		StringBuffer sb = new StringBuffer();
+//		for (int i = 0; i < 6 - num.length(); i++)
+//		{
+//			sb.append("0");
+//		}
+//		num = sb.toString() + num;
+//		return num;
+//	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

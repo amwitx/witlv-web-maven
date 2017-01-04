@@ -2,7 +2,7 @@ package v1.servlet.study;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -37,25 +37,29 @@ public class ResponseServlet extends HttpServlet
 	{
 		// TODO Auto-generated method stub
 
-		// 编码控制
+		// 编码控制（好使）
 		response.setHeader("content-type", "text/html;charset=utf-8");
+		//设置将字符以"UTF-8"编码输出到客户端浏览器（不好使）
+		response.setCharacterEncoding("UTF-8");
 		// 输出文本
 		String data = "你好，Servlet";
-		response.getWriter().append(data);
+		//在开发过程中，如果希望服务器输出什么浏览器就能看到什么，那么在服务器端都要以字符串的形式进行输出
+		PrintWriter out = response.getWriter();
+		//response.getWriter().append(data);
+		//使用PrintWriter流向客户端输出字符
+		out.write(data);
 		// response.getWriter();与response.getOutputStream();不能并存
-		//OutputStream outputStream = response.getOutputStream();
-		//response.getOutputStream().write(data.getBytes("utf-8"));
+		// OutputStream outputStream = response.getOutputStream();
+		//将字符转换成字节数组，指定以UTF-8编码进行转换
+		// response.getOutputStream().write(data.getBytes("utf-8"));
 		// outputStream.write(1);输出无效
-		//outputStream.write((1 + "").getBytes());
-		System.out.print(data);
+		// outputStream.write((1 + "").getBytes());
 		response.getWriter().append("<hr/>");
 		// 读取参数
 		String id = request.getParameter("id");
 		response.getWriter().append("id=" + id);
-		response.getWriter().append("<hr/>");
-		// 获取上下文
-		ServletContext context = this.getServletContext();
-		Properties props = new Properties();
+		// 输出控制台
+		System.out.print(data + id);
 		try
 		{
 			// 读取资源包配置文件
@@ -64,27 +68,30 @@ public class ResponseServlet extends HttpServlet
 			String url2 = resource.getString("jdbc.url");
 			String username2 = resource.getString("jdbc.username");
 			String password2 = resource.getString("jdbc.password");
+			// 字符串格式化方法1
 			String connectionString = String.format("driver=%s,url=%s,username=%s,password%s", driver1, url2, username2,
 					password2);
 			response.getWriter().append(connectionString);
 			response.getWriter().append("<hr/>");
 
-			// 文件流读取
+			// 使用servletContext读取资源文件
+			ServletContext context = this.getServletContext();
+			Properties props = new Properties();
 			InputStream stream = context.getResourceAsStream("/WEB-INF/classes/v1/db/config/db.properties");
 			props.load(stream);
 			String driver = props.getProperty("jdbc.driver");
 			String url = props.getProperty("jdbc.url");
 			String username = props.getProperty("jdbc.username");
 			String password = props.getProperty("jdbc.password");
-			// 字符串格式化
+			// 字符串格式化方法2
 			response.getWriter().append(MessageFormat.format("driver={0},url={1},username={2},password{3}", driver, url,
 					username, password));
+			// 客户端缓存（1天）
+			response.setDateHeader("expires", System.currentTimeMillis() + 1000 * 60 * 60 * 24);
 			// 禁止缓存当前页面
 			response.setDateHeader("expries", -1);
 			response.setHeader("Cache-Control", "no-cache");
 			response.setHeader("Pragma", "no-cache");
-			// 客户端缓存（1天）
-			response.setDateHeader("expires", System.currentTimeMillis() + 1000 * 60 * 60 * 24);
 			// 异常
 		} catch (Exception e)
 		{
