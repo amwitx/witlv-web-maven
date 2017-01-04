@@ -17,22 +17,22 @@
   	<servlet-class>v1.servlet.user.RegServlet</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>JspServlet</servlet-name>
-  	<display-name>JspServlet</display-name>
-  	<description></description>
-  	<servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
-  </servlet>
-  <servlet>
   	<servlet-name>ValicodeServlet</servlet-name>
   	<display-name>ValicodeServlet</display-name>
   	<description></description>
   	<servlet-class>v1.servlet.user.ValicodeServlet</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>Info</servlet-name>
-  	<display-name>Info</display-name>
+  	<servlet-name>ResponseServlet</servlet-name>
+  	<display-name>ResponseServlet</display-name>
   	<description></description>
-  	<servlet-class>v1.servlet.user.Info</servlet-class>
+  	<servlet-class>v1.servlet.study.ResponseServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>RequestServlet</servlet-name>
+  	<display-name>RequestServlet</display-name>
+  	<description></description>
+  	<servlet-class>v1.servlet.study.RequestServlet</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>LoginServlet</servlet-name>
@@ -43,15 +43,15 @@
   	<url-pattern>/RegServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>JspServlet</servlet-name>
-  	<url-pattern>/JspServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
   	<servlet-name>ValicodeServlet</servlet-name>
   	<url-pattern>/ValicodeServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>Info</servlet-name>
-  	<url-pattern>/Info</url-pattern>
+  	<servlet-name>ResponseServlet</servlet-name>
+  	<url-pattern>/ResponseServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>RequestServlet</servlet-name>
+  	<url-pattern>/RequestServlet</url-pattern>
   </servlet-mapping>
 </web-app>
